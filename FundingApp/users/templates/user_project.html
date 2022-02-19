@@ -1,0 +1,53 @@
+{% extends 'index.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% block title %}
+<title>Project</title>
+{% endblock %}
+
+{% block content %}
+<p>
+<div class="container">
+    <div class="card text-center" style="margin-top: 50px;">
+        <div class="card-footer text-muted">
+            <a href='/addproject' class="btn btn-primary">Add Project</a>
+        </div>
+        {% for project in projects %}
+        <div class="card-body">
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Title : {{project.title}}</li>
+                <li class="list-group-item">Category : {{project.category}}</li>
+                <li class="list-group-item">Details: {{project.details}}</li>
+                <li class="list-group-item">Total Target: {{project.totalTarget}}</li>
+                <li class="list-group-item">Start Project Date: {{project.startproject}}</li>
+                <li class="list-group-item">End Project Date: {{project.endproject}}</li>
+            </ul>
+
+        </div>
+        {%endfor%}
+        <!--        <h1 class="card-header">Donations</h1>-->
+        <!--        <div class="container">-->
+        <!--            <div class="row">-->
+        <!--                {%for donation in myProjects %}-->
+        <!--                <div class="card col-md-4">-->
+        <!--                    <img class="card-img-top img-thumbnail" src="{{donation.img}}" alt="Card image cap">-->
+        <!--                    <div class="card-body">-->
+
+        <!--                        <a href="{{ donation.id }}">-->
+        <!--                            <h4 class="card-text">Project title:{{donation.title}}</h4>-->
+        <!--                            <p class="card-text"> Amount:{{donation.amount}} LE</p>-->
+
+        <!--                        </a>-->
+        <!--                        <p class="card-text">{{donation.details}}</p>-->
+        <!--                        <p class="card-text"><small class="textmuted">{{donation.start_date}}</small></p>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--                {%endfor%}-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+    </div>
+</div>
+</p>
+{% endblock %}

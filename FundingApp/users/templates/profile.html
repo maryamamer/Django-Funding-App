@@ -1,0 +1,51 @@
+{% extends 'index.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% block title %}
+<title>Profile</title>
+{% endblock %}
+{% block nav %}
+
+
+{%if users.image %}
+<img src="{{ users.image.url }}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+{%else%}
+<img src="{%static '/media/login.png' %}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+{%endif%}
+
+{% endblock %}
+
+
+{% block content %}
+<p>
+    <div class="container">
+    <h1>Welcome To Your Profile</h1>
+    <div class="card text-center" style="margin-top: 50px;">
+        <div class="card-header">
+            welcome, {{users.fname}} {{users.lname}} {{users.image}}
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">First Name : {{users.fname}}</li>
+                <li class="list-group-item">Last Name : {{users.lname}}</li>
+                <li class="list-group-item">Email : {{users.email}}</li>
+                <li class="list-group-item">Phone: {{users.phone}}</li>
+                <li class="list-group-item">Date Of Birth: {{users.date_birth}}</li>
+                <li class="list-group-item">FaceBook Link: {{users.facebook_link}}</li>
+                <li class="list-group-item">Country: {{users.country}}</li>
+            </ul>
+        </div>
+        <div class="card-footer text-muted">
+            <a href='/UpdateProfile' class="btn btn-primary">Update Your Account</a>
+
+        </div>
+           <a href='/userproject' class="btn btn-primary mb-2">View Your Projects</a>
+           <a href='/project' class="btn btn-primary">View ALL</a>
+
+       </div>
+    </div>
+
+
+</div>
+</p>
+{% endblock %}

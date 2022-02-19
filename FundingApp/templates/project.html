@@ -1,0 +1,147 @@
+{% extends 'index.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+<title>Project</title>
+{% endblock %}
+
+{% block content %}
+<p>
+<div class="container">
+    <div class="card text-center" style="margin-top: 50px;">
+        <div class="card-footer text-muted">
+            <a href='/addproject' class="btn btn-primary">Add Project</a>
+        </div>
+        <div class="card-body">
+
+            {% for project in projects %}
+
+                        <h3>Project Images:</h3>
+                        <br/>
+                        <ul>
+                            {% for image in Images.images %}
+                            <li>
+                                <img
+                                        style="width: 50%; height:250px;"
+                                        src="{{image.img.url}}"
+                                />
+                            </li>
+                            {% endfor %}
+                        </ul>
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">ID : {{project.id}}</li>
+                <li class="list-group-item">Title : {{project.title}}</li>
+                <li class="list-group-item">Category : {{project.category}}</li>
+                <li class="list-group-item">Details: {{project.details}}</li>
+                <li class="list-group-item">Total Target: {{project.totalTarget}}</li>
+                <li class="list-group-item">Start Project Date: {{project.startproject}}</li>
+                <li class="list-group-item">End Project Date: {{project.endproject}}</li>
+                <!--Comments-->
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 card mb-4  mt-3 ">
+                            <div class="card-body">
+                                <!-- comments -->
+                                <h2>{{ comments.count }} comments</h2>
+
+                                {% for comment in comments %}
+                                <div class="comments" style="padding: 10px;">
+                                    <p class="font-weight-bold">
+                                        <span class=" text-muted font-weight-normal">
+                                            {{ comment.date }}
+                                        </span>
+                                    </p>
+                                    {{ comment.comment_content | linebreaks }}
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-md-8 card mb-4  mt-3 ">
+                            <div class="card-body">
+                                {% if new_comment %}
+                                <div class="alert alert-success" role="alert">
+                                    Your comment is awaiting moderation
+                                </div>
+                                {% else %}
+                                <h3>Leave a comment</h3>
+                                <form method="post" style="margin-top: 1.3em;">
+                                    {{ comment_form | crispy }}
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Rating -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 card mb-4  mt-3 ">
+                            <div class="card-body">
+                                <!-- rate -->
+                                <h2>{{ rate.count }} rate</h2>
+                                {% for r in rate %}
+                                <div class="rate" style="padding: 10px;">
+                                    <p class="font-weight-bold">
+                                        <span class=" text-muted font-weight-normal">
+                                            {{ r.date }}
+                                        </span>
+                                    </p>
+                                    {{ r.rate_content | linebreaks }} / 10
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-md-8 card mb-4  mt-3 ">
+                            <div class="card-body">
+                                {% if new_rate %}
+                                <div class="alert alert-success" role="alert">
+                                    Your rate is awaiting moderation
+                                </div>
+                                {% else %}
+<!--                                <h3>Leave a comment</h3>-->
+                                <form method="post" style="margin-top: 1.3em;">
+                                    {{ rate_form | crispy }}
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Donation -->
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-auto">
+                        <div class="item-label"><strong>Total Donation</strong></div>
+                        <div class="item-data">
+                            {{ total_donation }} LE
+                        </div>
+                    </div><!--//col-->
+                    <div class="col text-end">
+                        <form action="{% url 'donate' project.id %}" method="post">
+                            {% csrf_token %}
+                            {{ donate_form }}
+                            <input type="submit" value="Donate">
+                        </form>
+                    </div><!--//col-->
+                </div><!--//row-->
+
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+</p>
+{% endblock %}
+
+
+
